@@ -1,3 +1,10 @@
+To-do:
+[] Check flux cut+from Karim et al. vs. my paper
+[] Plot the LF for the chosen snapshot, compared w data
+[] Generate cumulative plot w L[OII] and maybe SFR
+[] Obtain the cuts for the target densities
+
+
 Generate a DESI-like catalogues:
 https://desi.lbl.gov/trac/wiki/Clustering/MockChallenge/make_galaxy
 
