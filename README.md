@@ -21,7 +21,8 @@ From DESI (https://desi.lbl.gov/trac/wiki/Clustering/MockChallenge/post-recon-BA
 *ELGs* mocks at redshift = 0.9873 (snap 97), densities={25e-4,20e-4,5.5e-4}(Mpc/h)^-3
 *LRGs* mocks at z=0.9873, density=4.4e-4 (Mpc/h)^-3 and z=0.7400, density=5.5e-4 (Mpc/h)^-3
 
-In taurus: /data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/
+In taurus, emission lines for the HighRes UNITSIM are at:
+/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/
 
 ## Output
 
