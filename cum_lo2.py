@@ -8,12 +8,12 @@ from matplotlib import pyplot as plt
 import mpl_style                                                                                      
 plt.style.use(mpl_style.style1)
 
-Testing = False
+Testing = True
 
 zz = 0.987
 
 sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
-lboxes = [1000.,1000.,1000.,1000.] # Mpc/h
+lboxes = [1000.] # Mpc/h
 
 unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
 
@@ -26,8 +26,7 @@ plotdir = outdir+'plots/'
 obsdir = '/home2/vgonzalez/lfs/'
 #############################
 
-if Testing: sims = [sims[0]] 
-
+if Testing: sims = [sims[0]]
 
 # Initialize histogram
 lmin = 38.
@@ -55,7 +54,7 @@ cm = plt.get_cmap('tab10') # Colour map to draw colours from
 # Loop over the simulations
 cols =[]
 for ii,sim in enumerate(sims):
-    col = cm(1.*ii/(nsims+1)) ; cols.append(col)
+    col = cm(1.*ii/nsims) ; cols.append(col)
 
     volume = lboxes[ii]**3
     

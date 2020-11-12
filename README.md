@@ -7,7 +7,11 @@ To-do:
 Maybe:
 [] HODs of the samples and other properties
 
-Generate a [DESI-like catalogues](https://desi.lbl.gov/trac/wiki/Clustering/MockChallenge/make_galaxy)
+In this folder there are codes to generate a [DESI-like catalogues](https://desi.lbl.gov/trac/wiki/Clustering/MockChallenge/make_galaxy) from the SAGE+UNIT catalogue. Programs and subfolders here:
+
+**lo2f.py** To plot the model [OII] luminosity function at z~1, compared with observations.
+
+**cum_lo2.py, cum_sf.py, cum_m.py** To plot the cumulative function on the indicated property and find the cuts on it that will give the target DESI number density.
 
 ## Specifications for DESI samples
 
