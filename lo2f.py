@@ -113,9 +113,9 @@ for ii,sim in enumerate(sims):
         ax.errorbar(ox,oy,yerr=[el,eh],fmt='o',ecolor=ocol,color=ocol,mec=ocol)
             
     # Plot intrinsic model LF
-    ind = np.where(lf_att > 0)
+    ind = np.where(lf > 0)
     x = lhist[ind]
-    y = np.log10(lf_att[ind])
+    y = np.log10(lf[ind])
     ax.plot(x,y,color=col,linestyle='-',label=sim)
 
     # Plot attenuated model LF
