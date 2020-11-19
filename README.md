@@ -11,7 +11,11 @@ In this folder there are codes to generate a [DESI-like catalogues](https://desi
 
 **lo2f.py** To plot the model [OII] luminosity function at z~1, compared with observations.
 
-**cum_lo2.py, cum_sf.py, cum_m.py** To plot the cumulative function on the indicated property and find the cuts on it that will give the target DESI number density.
+**cumu.py** To plot and create a file with the cumulative function on the indicated property and find the cuts on it that will give the target DESI number density.
+
+**find_cuts.py** Find the cuts in a given property to get a target number density
+
+**create_sel.py** Use the found cuts to create a subsample.
 
 ## Specifications for DESI samples
 
@@ -42,9 +46,15 @@ z_RSD = z + vz*(1+redshift)/H,
 
 where H=100*sqrt(Omega_m*(1+redshift)3 + Omega_Lambda)
 
+
+Using awk from default ASCII output files:
+```
+awk '{print $1 " " $2 " " $3 " " $6}' inputfile > outfile
+```
+
 ### Location at NERSC
 
 Once the catalogues are tested, they can go to NERSC:
-'''
+```
 /global/project/projectdirs/desi/mocks/UNIT/SAGE_[ELG, LRG, QSO]/z*
-'''
+```

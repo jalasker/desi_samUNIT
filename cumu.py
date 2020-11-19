@@ -52,7 +52,7 @@ nsims = len(sims)
 ocol = 'grey'                                                                                     
 
 # Initialize the Mass cum arrays and plot
-mmin = 8.5 ; mmax = 16. ; dm = 0.1
+mmin = 8.5 ; mmax = 16. ; dm = 0.05
 medges = np.array(np.arange(mmin,mmax,dm))
 mhist = medges[1:]-0.5*dm
 xtit="${\\rm log}_{10}(M_{*}/{\\rm M}_{\odot}h^{-1})$"
@@ -60,7 +60,7 @@ axm.set_xlim(9.,11.6) ;  axm.set_ylim(-5.,-0.7)
 axm.set_xlabel(xtit)  ;  axm.set_ylabel(ytit)
 
 # Initialize the SFR cum plot
-smin = 7. ; smax = 14. ; ds = 0.1
+smin = 7. ; smax = 14. ; ds = 0.02
 sedges = np.array(np.arange(smin,smax,ds))
 shist = sedges[1:]-0.5*ds
 xtit = "${\\rm log}_{10}(SFR/{\\rm M}_{\odot}h^{-1}{\\rm Gyr}^{-1})$"
