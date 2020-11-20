@@ -1,46 +1,40 @@
-##https://www.christopherlovell.co.uk/blog/2016/04/27/h5py-intro.html  
 # Create a hdf5 file with the selection of galaxies and properties 
 import os.path, sys   
 import h5py
 import numpy as np
 from Cosmology import *
 
-nvol = 64
+Testing = True
 
-sn_list = ['41','39']
-#surveys = ['All','DEEP2','VVDS-DEEP','eBOSS-SGC','DESI']
-surveys = ['eBOSS-SGC']
+zz = 0.987
 
-#############################
-path = '/cosma5/data/durham/violeta/Galform_Out/v2.7.0/stable/MillGas/'
-model = 'gp19/'
+sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+lboxes = [1000.]*len(sims) # Mpc/h                                                          
+h0 = 0.6774
 
-line = 'OII3727' ; lline = '[OII]'
 ############################################
-ntypes = len(surveys)
+unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
+outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+############################################
 
-# Path to mass cuts
-ndpath = '/cosma5/data/durham/violeta/lines/cosmicweb/selections/'
+props = ['mass','sfr','lo2']
+labelp = ['log10(M/Msun/h)','log10(SFR/Msun/Gyr)', 'log10(L[OII]/h^-2 erg/s)']
 
-for sn in sn_list:
-    # Read the Mass cuts
-    ndfile = ndpath+model+'ngal_mass_cuts_sn'+sn+'.dat'
-    nds_all, cuts = np.loadtxt(ndfile, usecols=(0,1), unpack=True)
-    nds = np.unique(nds_all) 
-    ndsurveys = np.genfromtxt(ndfile, usecols=(2,), unpack=True, dtype='str')
+if Testing: sims = [sims[0]]
 
-    # Generate output files with a header
-    for survey in surveys:
-        for nd in nds:
-            outm = ndpath+model+'ascii_files/mcut_'+survey+'_nd'+str(nd)+'_sn'+sn+'.dat'
-            print('Output: {}'.format(outm)) 
-            outf = open(outm, 'w')
-            outf.write('# xgal,ygal,zgal (Mpc/h), vxgal,vygal,vzgal (Km/s), log10(massh),log10(mass/Msun/h), log10(sfr/Msun/h/Gyr), lum,lum_ext (10^40 h^-2 erg/s), type (0= Centrals; 1,2= Satellites) \n')
-            outf.close()
+redshift = str(zz).replace('.','_')
 
-    volume = 0.
-    for ivol in range(nvol):
-        gfile = path+model+'iz'+sn+'/ivol'+str(ivol)+'/galaxies.hdf5'
+for sim in sims:
+    for ip,prop in enumerate(props):
+        # Read the prop cuts
+        ndfile = outdir+sim+'/ngal_'+prop+'_cuts_z'+redshift+'.dat'
+        nds, cuts = np.loadtxt(ndfile, unpack=True)
+        if np.isscalar(nds):                                                                          
+            nds = np.array([nds]) ; cuts = np.array([cuts])   
+
+        # Read the data from the sim #####here
+            
+            gfile = path+model+'iz'+sn+'/ivol'+str(ivol)+'/galaxies.hdf5'
         if (os.path.isfile(gfile)):        
             # Get some of the model constants
             f = h5py.File(gfile,'r')
@@ -180,4 +174,20 @@ for sn in sn_list:
             f.close()
 
 lbox = pow(volume,1./3.)
-print zz,'Box side (Mpc/h) =',lbox
+print(zz,'Box side (Mpc/h) =',lbox)
+#            outf.write('# xgal,ygal,zgal (Mpc/h), vxgal,vygal,vzgal (Km/s), log10(massh),log10(mass/Msun/h), log10(sfr/Msun/h/Gyr), lum,lum_ext (10^40 h^-2 erg/s), type (0= Centrals; 1,2= Satellites) \n')
+        #####################
+        for nd in nds:
+            snd = str("{:.2f}".format(abs(nd))).replace('.','_')
+            # Generate output files with a header
+            outm = outdir+sim+'/'+sim+'_'+prop+'_nd'+snd+'_z'+redshift+'.hdf5'
+            hf = h5py.File(outm, 'w')
+            head = hf.create_dataset('header',(100,))
+            head.attrs[u'Simulation']    = sim
+            head.attrs[u'h0']            = h0
+            head.attrs[u'redshift']      = zz
+            head.attrs[u'number_density']= nd
+            head.attrs[u'units_nd']      = u'log10(nd/(Mpc/h)^-3)'
+            head.attrs[u'sel_property']  = prop
+            print('Output: {}'.format(outm)) #; print(list(head.attrs.items()))      
+        #####################

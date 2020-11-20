@@ -3,9 +3,9 @@ import h5py
 import numpy as np
 from iotools import check_file
 import read_jc_obs as jc
-import matplotlib ; matplotlib.use('Agg')                                                             
-from matplotlib import pyplot as plt                                                                  
-import mpl_style                                                                                      
+import matplotlib ; matplotlib.use('Agg')  
+from matplotlib import pyplot as plt
+import mpl_style
 plt.style.use(mpl_style.style1)
 
 Testing = False
@@ -13,7 +13,7 @@ Testing = False
 zz = 0.987
 
 sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
-lboxes = [1000.,1000.,1000.,1000.] # Mpc/h
+lboxes = [1000.]*len(sims) # Mpc/h
 
 unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
 

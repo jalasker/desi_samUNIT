@@ -21,10 +21,11 @@ sfnd = [25e-4,20e-4,5.5e-4]
 
 if Testing: sims=[sims[0]] ; props=[props[0]]
 
+redshift = str(zz).replace('.','_')
+
 for sim in sims:
     for ip,prop in enumerate(props):
         # Read the cumulative abundance for the stllar mass
-        redshift = str(zz).replace('.','_')
         infile = inpath+sim+'/cumu_'+prop+'_z'+redshift+'.dat' #; print(infile)
         if (not os.path.isfile(infile)):
             print('STOP: {} not found'.format(infile)) ; sys.exit()
