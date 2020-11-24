@@ -1,11 +1,9 @@
 To-do:
-[] Plot the LF for the chosen snapshot, compared w data
-[] Generate cumulative plot w L[OII], SFR and M* (to make LRG type also)
-[] Obtain the cuts for the target densities
 [] Measure bias from the catalogues (maybe from Pk)
 
 Maybe:
-[] HODs of the samples and other properties
+[] hdf5 file with further properties
+[] HODs of the samples
 
 In this folder there are codes to generate a [DESI-like catalogues](https://desi.lbl.gov/trac/wiki/Clustering/MockChallenge/make_galaxy) from the SAGE+UNIT catalogue. Programs and subfolders here:
 
@@ -16,6 +14,8 @@ In this folder there are codes to generate a [DESI-like catalogues](https://desi
 **find_cuts.py** Find the cuts in a given property to get a target number density
 
 **create_sel.py** Use the found cuts to create a subsample.
+
+**bias_pk.py** Obtain the P(k) and bias for the different selections.
 
 ## Specifications for DESI samples
 
