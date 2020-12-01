@@ -15,7 +15,11 @@ In this folder there are codes to generate a [DESI-like catalogues](https://desi
 
 **create_sel.py** Use the found cuts to create a subsample.
 
-**bias_pk.py** Obtain the P(k) and bias for the different selections.
+**pklin.py** Calculate the matter power spectrum P(k,z) from CAMB (with and without non linear corrections)
+
+**pkg.py** Calculate P(k) for the sample galaxies using nbodykit
+
+**bias_pk.py** Obtain the bias for the different selections.
 
 ## Specifications for DESI samples
 
