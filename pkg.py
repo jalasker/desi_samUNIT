@@ -7,7 +7,7 @@ import numpy as np
 
 Testing = False
 
-zspace = True
+zspace = False
 
 zz = 0.987
 
@@ -32,7 +32,7 @@ for iis,sim in enumerate(sims):
     inpath = seldir+sim+'/ascii_files/'
     files = glob.glob(inpath+'*dat')
     if Testing: files = [files[0]]
-
+    
     for ff in files:
         # Reading the file in nbodykit format
         names =['x', 'y', 'z', 'z_rsd']

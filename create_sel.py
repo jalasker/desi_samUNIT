@@ -23,7 +23,7 @@ outdir = '/home2/vgonzalez/out/desi_samUNIT/'
 props = ['mass','sfr','lo2']
 labelp = ['log10(M/Msun/h)','log10(SFR/Msun/Gyr)', 'log10(L[OII]/h^-2 erg/s)']
 
-if Testing: sims = [sims[0]]
+if Testing: sims = [sims[0]] ; props = [props[0]]
 
 redshift = str(zz).replace('.','_')
 

@@ -20,7 +20,8 @@ unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
 
-nd_lrg = 4.4e-4
+nd_lrg1 = 0.75e-4
+nd_lrg2 = 4.4e-4
 nd_elg1 = 25e-4
 nd_elg2 = 20e-4
 nd_elg3 = 5.5e-4
@@ -146,7 +147,8 @@ for ii,sim in enumerate(sims):
     y = np.log10(mcum[ind])
     axm.plot(x,y,color=col,label=sim)
 
-    axm.axhline(y=np.log10(nd_lrg),linestyle='--',color=ocol)
+    axm.axhline(y=np.log10(nd_lrg1),linestyle='--',color=ocol)
+    axm.axhline(y=np.log10(nd_lrg2),linestyle='--',color=ocol)
     
     # Plot cumulative SFR function
     ind = np.where(scum > 0)

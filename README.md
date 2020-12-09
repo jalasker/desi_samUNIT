@@ -19,7 +19,7 @@ In this folder there are codes to generate a [DESI-like catalogues](https://desi
 
 **pkg.py** Calculate P(k) for the sample galaxies using nbodykit
 
-**bias_pk.py** Obtain the bias for the different selections.
+**bias_r_pk.py** Obtain the bias in real space for the different selections.
 
 ## Specifications for DESI samples
 

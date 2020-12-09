@@ -15,8 +15,7 @@ inpath = '/home2/vgonzalez/out/desi_samUNIT/'
 props = ['mass','sfr','lo2']
 labelp = ['log10(M/Msun/h)','log10(SFR/Msun/Gyr)', 'log10(L[OII]/h^-2 erg/s)']
 
-
-massnd = [4.4e-4]
+massnd = [0.75e-4, 4.4e-4]
 sfnd = [25e-4,20e-4,5.5e-4]
 
 if Testing: sims=[sims[0]] ; props=[props[0]]
