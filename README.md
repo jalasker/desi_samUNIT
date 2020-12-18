@@ -1,5 +1,5 @@
 To-do:
-[] Measure bias from the catalogues (maybe from Pk)
+[] Measure bias in z-space and compare
 
 Maybe:
 [] hdf5 file with further properties
@@ -14,6 +14,8 @@ In this folder there are codes to generate a [DESI-like catalogues](https://desi
 **find_cuts.py** Find the cuts in a given property to get a target number density
 
 **create_sel.py** Use the found cuts to create a subsample.
+
+**cumu_multi.py** Cumulative function for only those galaxies not selected as 'elgs' with the cuts done above.
 
 **pklin.py** Calculate the matter power spectrum P(k,z) from CAMB (with and without non linear corrections)
 
