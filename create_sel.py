@@ -32,7 +32,9 @@ set_cosmology(omega0=0.3089,omegab=0.02234/h0/h0,h0=h0,
               universe="Flat",include_radiation=False)
 Hz = H(zz)
 
-for sim in sims:   
+for isim,sim in enumerate(sims):
+    lbox = lboxes[isim]
+
     # Prep output directories
     if h5file:
         outpath = outdir+sim+'/h5_files/'
@@ -61,7 +63,16 @@ for sim in sims:
     sfr = f['SFR'][ifirst:ilast]*10**9 # Msun/h/Gyr
     lo2 = 10**f['logLOII_3727_att'][ifirst:ilast] +\
           10**f['logLOII_3729_att'][ifirst:ilast]
-    
+
+    # Correct for periodic boundary effects
+    ind = np.where(xgalz>lbox) ; xgalz[ind] = xgalz[ind] - lbox
+    ind = np.where(xgalz<0.)   ; xgalz[ind] = xgalz[ind] + lbox
+    ind = np.where(ygalz>lbox) ; ygalz[ind] = ygalz[ind] - lbox
+    ind = np.where(ygalz<0.)   ; ygalz[ind] = ygalz[ind] + lbox
+    ind = np.where(zgalz>lbox) ; zgalz[ind] = zgalz[ind] - lbox
+    ind = np.where(zgalz<0.)   ; zgalz[ind] = zgalz[ind] + lbox
+
+    # Make selections for different cuts
     for ip,prop in enumerate(props):
         vals = np.full(len(mhalo),-999.)
         if (prop == 'mass'): #here vals in adequate units

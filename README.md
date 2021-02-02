@@ -11,17 +11,21 @@ In this folder there are codes to generate a [DESI-like catalogues](https://desi
 
 **cumu.py** To plot and create a file with the cumulative function on the indicated property and find the cuts on it that will give the target DESI number density.
 
+**cumu_multi.py** Cumulative function for only those galaxies not selected as 'elgs' with the cuts done above.
+
 **find_cuts.py** Find the cuts in a given property to get a target number density
 
 **create_sel.py** Use the found cuts to create a subsample.
 
-**cumu_multi.py** Cumulative function for only those galaxies not selected as 'elgs' with the cuts done above.
+**z_zrsd.py** Plot zrsd vs z to check the created subsamples.
 
 **pklin.py** Calculate the matter power spectrum P(k,z) from CAMB (with and without non linear corrections)
 
 **pkg.py** Calculate P(k) for the sample galaxies using nbodykit
 
 **bias_r_pk.py** Obtain the bias in real space for the different selections.
+
+**bias_z_pk.py** Obtain the bias in z-space for the different selections. WORK IN PROGRESS
 
 ## Specifications for DESI samples
 
