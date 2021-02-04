@@ -119,9 +119,9 @@ for iis,sim in enumerate(sims):
                 outf.write(str(bias)+'  '+ff.split('/Pkz/Pkz_')[1]+' \n')
         print('nd={:.3f} for file {}, bias={}'.format(np.log10(nd),root,bias))
             
-        # Plot bias r-space
+        # Plot bias z-space
         axr.plot(kg,np.sqrt(pkg/pth),color=col)
-        axr.axhline(bias,color=col,linestyle=':')
+        axr.axhline(np.sqrt(bias**2 + fg*bias*2/3 + fg*fg/5),color=col,linestyle=':')
 
         # Plot bias P(k)
         label = ff.split('Pkz_')[1].split('_z')[0]
