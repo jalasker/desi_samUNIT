@@ -3,6 +3,7 @@ import glob
 import numpy as np
 from scipy import interpolate
 from stats import chi2
+import Cosmology as cosmo
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -18,6 +19,9 @@ ngrid = 128 # The one used in pkg.py
 
 sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h
+h0 = 0.6774
+omegam0 = 0.3089
+omegab0 = 0.02234/h0/h0
 
 # Limits to obtain the bias
 kminb = 0.01
@@ -37,6 +41,12 @@ fpth = interpolate.interp1d(k_th,plin_th)
 # Array for trying out bias
 abias = np.linspace(0.1,20.,10000)
 
+# Obtain the derivative of the linear growth rate at the target redshift
+gamma = 0.545
+cosmo.set_cosmology(omega0=omegam0,omegab=omegab0,h0=h0)
+omegamz = omegam0*(1+zz)**3/(cosmo.E(zz)**2)
+fg = np.power(omegamz,gamma)
+
 # Read the galaxy P(k,zz)
 for iis,sim in enumerate(sims):
     inpath = seldir+sim
@@ -50,8 +60,8 @@ for iis,sim in enumerate(sims):
     cols = ['k','k']
     
     axr = plt.subplot(gsr[2,0])  # Ratio plot
-    axr.set_xlabel("$k$ [$h$/Mpc] (z-space)")
-    axr.set_ylabel("$\\sqrt{P_{\\rm i}/P_{\\rm DM}}$")
+    axr.set_xlabel("$k$ [$h$/Mpc]")
+    axr.set_ylabel("$\\sqrt{P^s_{\\rm i}/P_{\\rm DM}}$")
     axr.set_autoscale_on(False) ;  axr.minorticks_on()
     axr.set_xlim(0.01,knyquist) ; axr.set_ylim(0.8,2)
     axr.set_xscale('log')
@@ -62,12 +72,12 @@ for iis,sim in enumerate(sims):
     plt.setp(axp.get_xticklabels(), visible=False)
     axp.set_autoscale_on(False) ;  axp.minorticks_on()
     axp.set_yscale('log') ; axp.set_ylim(11,100000.)
-    axp.set_ylabel('P($k$) [Mpc/$h$)$^3$]')
+    axp.set_ylabel('P$^s$($k$) [Mpc/$h$)$^3$]')
     axp.axvline(x=knyquist,color=cols[1],linestyle=':')
     axp.plot(k_th,plin_th,color=cols[0],label='DM, z='+str(zz))
     axp.plot(k_th,pnl_th,color=cols[1],linestyle='--',label='DM, NL')
     
-    # r-space
+    # z-space
     files = sorted(glob.glob(inpath+'/ascii_files/Pkz/Pkz*dat'))
     if Testing: files = [files[0]]
 
@@ -93,13 +103,13 @@ for iis,sim in enumerate(sims):
         errorPk = np.sqrt(((2*np.pi)**2/(kg**2*dk*volumen))*(pkg + 1/nd)**2)
         pth = fpth(kg)
 
-        # Bias calculation r-space
+        # Bias calculation z-space
         chis = np.zeros((len(abias))) ; chis.fill(999.) ; bias = -999.
         ind = np.where((kg>=kminb) & (kg<kmaxb))
         if (np.shape(ind)[1]>1):
             for ib,bb in enumerate(abias):
                 obs = pkg[ind]
-                model = bb*bb*pth[ind]
+                model = pth[ind]*(bb*bb + fg*bb*2/3 + fg*fg/5)
                 error = errorPk[ind]
                 chis[ib] = chi2(obs,model,error)
 
