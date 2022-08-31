@@ -10,12 +10,15 @@ Testing = False
 
 zz = 0.987
 
-sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['all_z0.9873']
+#sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h
 
 #############################
-outdir = '/home2/vgonzalez/out/desi_samUNIT/'
-plotdir = outdir+'plots/zzrsd/'
+#outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+#plotdir = outdir+'plots/zzrsd/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+plotdir = outdir+'plots/'
 #############################
 
 if Testing: sims = [sims[0]]
@@ -36,7 +39,7 @@ for ii,sim in enumerate(sims):
         
         # Save plot
         plt.tight_layout()                                                                                
-        plotf = plotdir+'zzrsd_'+ff.split('/')[-1].split('.dat')[0]+'.pdf'
+        plotf = plotdir+'zzrsd_'+ff.split('/')[-1].split('.dat')[0]+'.png'
         print(plotf)
         print('Plot: {}'.format(plotf))
         fig.savefig(plotf)

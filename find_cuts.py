@@ -6,17 +6,22 @@ Testing = False
 
 zz = 0.987
 
-sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['z0.9873']
+#sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 
 #############################
-inpath = '/home2/vgonzalez/out/desi_samUNIT/'
+inpath = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+#inpath = '/home2/vgonzalez/out/desi_samUNIT/'
 #############################
 
 props = ['mass','sfr','lo2']
 labelp = ['log10(M/Msun/h)','log10(SFR/Msun/Gyr)', 'log10(L[OII]/h^-2 erg/s)']
 
-massnd = [0.75e-4, 4.4e-4]
-sfnd = [25e-4,20e-4,5.5e-4]
+#massnd = [0.75e-4, 4.4e-4, 13.34e-4]
+#sfnd = [25e-4,20e-4,5.5e-4, 13.34e-4]
+
+massnd = [13.34e-4, 14.92e-4, 1.0E-2, 10**(-2.5)]
+sfnd = [13.34e-4, 14.92e-4, 1.0E-2, 10**(-2.5)]
 
 if Testing: sims=[sims[0]] ; props=[props[0]]
 

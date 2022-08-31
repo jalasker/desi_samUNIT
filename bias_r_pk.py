@@ -15,8 +15,9 @@ Testing = False
 zz = 0.987
 
 ngrid = 128 # The one used in pkg.py
+sims = ['all_z0.9873']
 
-sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+#sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h
 
 # Limits to obtain the bias
@@ -24,7 +25,8 @@ kminb = 0.01
 kmaxb = 0.1
 
 ############################################   
-seldir = '/home2/vgonzalez/out/desi_samUNIT/'
+#seldir = '/home2/vgonzalez/out/desi_samUNIT/'
+seldir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 ############################################
 
 if Testing: sims = [sims[0]]
@@ -102,6 +104,7 @@ for iis,sim in enumerate(sims):
                 model = bb*bb*pth[ind]
                 error = errorPk[ind]
                 chis[ib] = chi2(obs,model,error)
+                #chis[ib] = (obs-model)**2/error
 
             ib = np.where(chis == np.nanmin(chis))
             bias = abias[ib][0]

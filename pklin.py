@@ -23,7 +23,9 @@ Omh2 = 0.3089*h0**2
 sigma8 = 0.8147
 
 ############################################   
-outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+#outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+
 ############################################
 
 # Set Cosmology for CAMB (default As=2e-09, used for the normalisation)

@@ -1,7 +1,8 @@
 import sys
 import h5py
 import numpy as np
-from iotools import check_file
+#from iotools import check_file
+import os.path
 import read_jc_obs as jc
 import matplotlib ; matplotlib.use('Agg')  
 from matplotlib import pyplot as plt
@@ -11,19 +12,23 @@ plt.style.use(mpl_style.style1)
 Testing = False
 
 zz = 0.987
-
-sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['all_z0.9873']
+#sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h
 
-unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
+
+#unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
+unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/'
 
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
 
 #############################
-outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+#outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 plotdir = outdir+'plots/'
-obsdir = '/home2/vgonzalez/lfs/'
+obsdir = '/global/project/projectdirs/desi/mocks/'
+
 #############################
 
 if Testing: sims = [sims[0]] 
@@ -60,8 +65,13 @@ for ii,sim in enumerate(sims):
     volume = lboxes[ii]**3
     
     # File to read
-    ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
-    if (not check_file(ff)):  continue
+    #ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
+    ff = unitdir+sim+'/'+'UNITSIM1_model_z'+str(zz)+'_ELGs.h5'
+
+    #if (not check_file(ff)):  continue
+    if (not os.path.exists(ff)):
+        print(ff)
+        continue
 
     f = h5py.File(ff,'r') 
     
@@ -101,7 +111,7 @@ for ii,sim in enumerate(sims):
 
 
     # Plot all observations
-    ox, oy, el, eh = jc.read_jc_lf(obsdir+'lf_may16_comparat/',zz,
+    ox, oy, el, eh = jc.read_jc_lf(obsdir+'OIIlf_may16_comparat/',zz,
                                    infile='O2_3728-data-summary-Planck15.txt')
     ind = np.where(oy>-5) 
     oxr = ox[ind] ; oyr = oy[ind]

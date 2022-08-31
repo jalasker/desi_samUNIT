@@ -2,34 +2,41 @@ import sys,os
 import h5py
 import numpy as np
 from iotools import check_file
+import os.path
 from stats import n_gt_x
 import matplotlib ; matplotlib.use('Agg')                                                             
 from matplotlib import pyplot as plt                                                                  
-import mpl_style                                                                                      
-plt.style.use(mpl_style.style1)
+import mpl_style
+print('a')          
+#plt.style.use(mpl_style.style1)
 
 Testing = False
 
 zz = 0.987
 
-sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+#sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+#sims = ['all_z0.9873']
+sims = ['z0.9873']
 lboxes = [1000.]*len(sims) # Mpc/h
-
-unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
-
+#/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/all_z0.9873/UNITSIM1_SAGE_z0.987.hdf5
+unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
-
-nd_lrg1 = 0.75e-4
-nd_lrg2 = 4.4e-4
-nd_elg1 = 25e-4
-nd_elg2 = 20e-4
-nd_elg3 = 5.5e-4
-
+print('b')
+#nd_lrg1 = 0.75e-4
+#nd_lrg2 = 4.4e-4
+#nd_elg1 = 25e-4
+#nd_elg2 = 20e-4
+#nd_elg3 = 5.5e-4
+nd_elgDESI = 13.34e-4
+nd_elgDESIW = 14.92e-4
+nd_elgDESIBig = 1.0E-2
+#nd_Jimenez = 10**(-2.5)
 #############################
-outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+#outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 plotdir = outdir+'plots/'
-obsdir = '/home2/vgonzalez/lfs/'
+#obsdir = '/home2/vgonzalez/lfs/'
 #############################
 
 if Testing: sims = [sims[0]]
@@ -51,7 +58,7 @@ ytit="${\\rm log}_{10}(n_{\\rm gal}(>X)/Mpc^{-3}h^3)$"
 cm = plt.get_cmap('tab10') # Colour map to draw colours from
 nsims = len(sims)
 ocol = 'grey'                                                                                     
-
+print('c')
 # Initialize the Mass cum arrays and plot
 mmin = 8.5 ; mmax = 16. ; dm = 0.05
 medges = np.array(np.arange(mmin,mmax,dm))
@@ -75,10 +82,14 @@ lhist = ledges[1:]-0.5*dl
 xtit = "${\\rm log}_{10}(L\\rm{[OII]}/h^{-2}{\\rm erg\,s}^{-1})$"
 axl.set_xlim(38.5,42.5) 
 axl.set_xlabel(xtit)
-
+print('d')
 # Loop over the simulations
 cols =[]
 for ii,sim in enumerate(sims):
+    print('ii')
+    print(ii)
+    print('sim')
+    print(sim)
     ntot = 0
     volume = lboxes[ii]**3
     col = cm(ii) ; cols.append(col)
@@ -88,10 +99,17 @@ for ii,sim in enumerate(sims):
     scum = np.full((len(shist)),0.)
     lcum = np.full((len(lhist)),0.)
 
-    # File to read
-    ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
-    if (not check_file(ff)):  continue
-
+    # File to readUNITSIM1_model_z0.987_ELGs.h5
+    #ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
+    #UNITSIM1_model_z0.987_ELGs.h5
+    ff = unitdir+sim+'/UNITSIM1_model_z'+str(zz)+'_ELGs.h5'
+    print('ff')
+    print(ff)
+    if (not check_file(ff)):  print('quitting');continue
+    #if (not os.path.exists( ff)):  
+    #    print(ff + " does not exist")
+    #    continue
+    print(ff)
     f = h5py.File(ff,'r') 
     
     ifirst=0 ; ilast=f['Mstar'].shape[0]
@@ -119,21 +137,27 @@ for ii,sim in enumerate(sims):
     if (np.shape(ind)[1] > 0.):
         ll = np.log10(mass[ind])
         H = n_gt_x(medges[:-1],ll)
+        #H, _ = np.histogram(ll, medges)
         mcum += H
+        #mcum += np.cumsum(H[::-1])[::-1] 
 
     # SFR
     ind = np.where(sfr>0.)
     if (np.shape(ind)[1] > 0.):
         ll = np.log10(sfr[ind])
         H = n_gt_x(sedges[:-1],ll)
-        scum += H
+        #H, _  = np.histogram(ll, bins = sedges)
+        scum += H 
+        #scum += np.cumsum(H[::-1])[::-1] 
 
     # L[OII]
     ind = np.where(lum_att>0.)
     if (np.shape(ind)[1] > 0.):
         ll = np.log10(lum_att[ind]) + 2*np.log10(h0) # erg/s/h**2
         H = n_gt_x(ledges[:-1],ll)
-        lcum += H
+        #H, _ = np.histogram(ll, bins = ledges)
+        lcum += H 
+        #lcum += np.cumsum(H[::-1])[::-1] 
 
     # Normalize the cumulative function
     mcum = mcum/volume
@@ -147,8 +171,13 @@ for ii,sim in enumerate(sims):
     y = np.log10(mcum[ind])
     axm.plot(x,y,color=col,label=sim)
 
-    axm.axhline(y=np.log10(nd_lrg1),linestyle='--',color=ocol)
-    axm.axhline(y=np.log10(nd_lrg2),linestyle='--',color=ocol)
+    #axm.axhline(y=np.log10(nd_lrg1),linestyle='--',color=ocol)
+    #axm.axhline(y=np.log10(nd_lrg2),linestyle='--',color=ocol)
+    axm.axhline(y=np.log10(nd_elgDESI),linestyle='--',color='b', label = 'DESI SV3 ELG')
+
+    axm.axhline(y=np.log10(nd_elgDESIW),linestyle='--',color='Orange', label = 'DESI SV3 ELG Weighted')
+
+    axm.axhline(y=np.log10(nd_elgDESIBig),linestyle='--',color='Orange', label = 'DESI SV3 ELG Huge for test')
     
     # Plot cumulative SFR function
     ind = np.where(scum > 0)
@@ -156,20 +185,26 @@ for ii,sim in enumerate(sims):
     y = np.log10(scum[ind])
     axs.plot(x,y,color=col)
 
-    axs.axhline(y=np.log10(nd_elg1),linestyle='--',color=ocol)
-    axs.axhline(y=np.log10(nd_elg2),linestyle='--',color=ocol)
-    axs.axhline(y=np.log10(nd_elg3),linestyle='--',color=ocol)
-
+    #axs.axhline(y=np.log10(nd_elg1),linestyle='--',color=ocol)
+    #axs.axhline(y=np.log10(nd_elg2),linestyle='--',color=ocol)
+    #axs.axhline(y=np.log10(nd_elg3),linestyle='--',color=ocol)
+    axs.axhline(y=np.log10(nd_elgDESI),linestyle='--',color='b', label = 'DESI SV3 nELG')
+    axs.axhline(y=np.log10(nd_elgDESIW),linestyle='--',color='Orange', label = 'DESI SV3 nELG Weighted')
+    axs.axhline(y=np.log10(nd_elgDESIBig),linestyle='--',color='Orange', label = 'DESI SV3 nELG Huge for test')
+    axs.legend()    
     # Plot cumulative L[OII] function
     ind = np.where(lcum > 0)
     x = lhist[ind]
     y = np.log10(lcum[ind])
     axl.plot(x,y,color=col)
 
-    axl.axhline(y=np.log10(nd_elg1),linestyle='--',color=ocol)
-    axl.axhline(y=np.log10(nd_elg2),linestyle='--',color=ocol)
-    axl.axhline(y=np.log10(nd_elg3),linestyle='--',color=ocol)
-
+    #axl.axhline(y=np.log10(nd_elg1),linestyle='--',color=ocol)
+    #axl.axhline(y=np.log10(nd_elg2),linestyle='--',color=ocol)
+    #axl.axhline(y=np.log10(nd_elg3),linestyle='--',color=ocol)
+    axl.axhline(y=np.log10(nd_elgDESI),linestyle='--',color='b', label = 'DESI SV3 nELG')
+    axl.axhline(y=np.log10(nd_elgDESIW),linestyle='--',color='Orange', label = 'DESI SV3 nELG Weighted')
+    axl.axhline(y=np.log10(nd_elgDESIBig),linestyle='--',color='Orange', label = 'DESI SV3 nELG Big for test')
+    axl.legend()
 
     # Write output for each property
     props = ['mass','sfr','lo2']
@@ -203,8 +238,18 @@ for ii,sim in enumerate(sims):
 # Legend    
 leg = axm.legend(loc=0,fontsize='small', handlelength=0, handletextpad=0)                         
 leg.draw_frame(False)                                                                             
-for ii,text in enumerate(leg.get_texts()):                                                        
-    text.set_color(cols[ii])                                                                     
+for ii,text in enumerate(leg.get_texts()):
+    try:
+        if 'DESI' in text.get_text():
+            if 'Weighted' in text.get_text():
+                text.set_color('Orange')
+            else:
+                text.set_color('b')
+        else:                                                     
+            text.set_color(cols[ii])
+    except:
+        print(ii)
+        print(text)                                                                     
 for item in leg.legendHandles:                                                                
     item.set_visible(False)                                                                   
                                                                                                   

@@ -10,14 +10,17 @@ Testing = False
 h5file = False
 
 zz = 0.987
-
-sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['z0.9873']
+#sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h                                                          
 h0 = 0.6774
 
 ############################################
-unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
-outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+#unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
+#outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+
+unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 ############################################
 
 props = ['mass','sfr','lo2']
@@ -44,8 +47,12 @@ for isim,sim in enumerate(sims):
         os.makedirs(outpath)
         
     # Read the data from the sim
-    ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
-    if (not check_file(ff)):  continue
+    #ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
+
+    ff = unitdir+sim+'/UNITSIM1_model_z'+str(zz)+'_ELGs.h5'
+    print(ff)
+    if (not check_file(ff)):  print('quitting'); continue
+    #if (not os.path.exists(ff)):  continue
     f = h5py.File(ff,'r')
 
     ifirst=0 ; ilast=f['Mstar'].shape[0]
@@ -53,6 +60,7 @@ for isim,sim in enumerate(sims):
         ilast = 50000
 
     mhalo = f['Mhalo'][ifirst:ilast] # Msun/h
+    mainmhalo = f['MainMhalo'][ifirst:ilast] #Msun/h
     xgal = f['Xpos'][ifirst:ilast] # Mpc/h
     ygal = f['Ypos'][ifirst:ilast] # Mpc/h
     zgal = f['Zpos'][ifirst:ilast] # Mpc/h
@@ -61,6 +69,9 @@ for isim,sim in enumerate(sims):
     zgalz = f['Zpos'][ifirst:ilast] + f['Zvel'][ifirst:ilast]*(1+zz)/Hz
     mass = f['Mstar'][ifirst:ilast] # Msun/h
     sfr = f['SFR'][ifirst:ilast]*10**9 # Msun/h/Gyr
+    mainID = f['MainHaloID'][ifirst:ilast]
+    hostID = f['HostHaloID'][ifirst:ilast]
+    satFlag = np.invert(mainID == hostID)
     lo2 = 10**f['logLOII_3727_att'][ifirst:ilast] +\
           10**f['logLOII_3729_att'][ifirst:ilast]
 
@@ -104,7 +115,7 @@ for isim,sim in enumerate(sims):
             nd = str("{:.2f}".format(abs(nds[ic]))).replace('.','_')
             if not h5file:
                 outm = outpath+prop+'_cuts_nd'+nd+'_z'+redshift+'.dat'
-                tofile = np.column_stack((xgal[ind],ygal[ind],zgal[ind],zgalz[ind]))
+                tofile = np.column_stack((xgal[ind],ygal[ind],zgal[ind],zgalz[ind], mhalo[ind], lo2[ind], satFlag[ind], mainID[ind], hostID[ind], mainmhalo[ind]))
                 with open(outm,'w') as outf:
                     np.savetxt(outf, tofile, fmt ='%.10e')
                     
