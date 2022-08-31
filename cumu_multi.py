@@ -10,12 +10,15 @@ plt.style.use(mpl_style.style1)
 
 Testing = False
 
-zz = 0.987
+zz = 0.9873
 
-sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+#sims = ['z0.9873']
+
 lboxes = [1000.]*len(sims) # Mpc/h
 
-unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
+#unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
+unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
 
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
@@ -27,9 +30,9 @@ nd_elg2 = 20e-4
 nd_elg3 = 5.5e-4
 
 #############################
-outdir = '/home2/vgonzalez/out/desi_samUNIT/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 plotdir = outdir+'plots/'
-obsdir = '/home2/vgonzalez/lfs/'
+#obsdir = '/home2/vgonzalez/lfs/'
 #############################
 
 if Testing: sims = [sims[0]]
@@ -90,7 +93,7 @@ for ii,sim in enumerate(sims):
 
     # File to read
     ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
-    if (not check_file(ff)):  continue
+    if (not check_file(ff)):  print('quitting'); print(ff);continue
 
     f = h5py.File(ff,'r') 
     

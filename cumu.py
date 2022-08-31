@@ -7,22 +7,21 @@ from stats import n_gt_x
 import matplotlib ; matplotlib.use('Agg')                                                             
 from matplotlib import pyplot as plt                                                                  
 import mpl_style
-print('a')          
 #plt.style.use(mpl_style.style1)
 
 Testing = False
 
-zz = 0.987
+zz = 0.9873
 
-#sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 #sims = ['all_z0.9873']
-sims = ['z0.9873']
+#sims = ['z0.9873']
 lboxes = [1000.]*len(sims) # Mpc/h
 #/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/all_z0.9873/UNITSIM1_SAGE_z0.987.hdf5
+
 unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
-print('b')
 #nd_lrg1 = 0.75e-4
 #nd_lrg2 = 4.4e-4
 #nd_elg1 = 25e-4
@@ -99,17 +98,14 @@ for ii,sim in enumerate(sims):
     scum = np.full((len(shist)),0.)
     lcum = np.full((len(lhist)),0.)
 
-    # File to readUNITSIM1_model_z0.987_ELGs.h5
+    # File to read UNITSIM1_model_z0.987_ELGs.h5
     #ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
     #UNITSIM1_model_z0.987_ELGs.h5
-    ff = unitdir+sim+'/UNITSIM1_model_z'+str(zz)+'_ELGs.h5'
+    ff = unitdir+'z'+str(zz)+'/UNITSIM1_model_z'+str(round(zz, 3))+'_ELGs.h5'
     print('ff')
     print(ff)
     if (not check_file(ff)):  print('quitting');continue
-    #if (not os.path.exists( ff)):  
-    #    print(ff + " does not exist")
-    #    continue
-    print(ff)
+    
     f = h5py.File(ff,'r') 
     
     ifirst=0 ; ilast=f['Mstar'].shape[0]

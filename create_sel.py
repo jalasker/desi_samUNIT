@@ -9,9 +9,9 @@ Testing = False
 
 h5file = False
 
-zz = 0.987
-sims = ['z0.9873']
-#sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+zz = 0.9873
+#sims = ['z0.9873']
+sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h                                                          
 h0 = 0.6774
 
@@ -20,7 +20,7 @@ h0 = 0.6774
 #outdir = '/home2/vgonzalez/out/desi_samUNIT/'
 
 unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
-outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output_LRGTest/'
 ############################################
 
 props = ['mass','sfr','lo2']
@@ -47,9 +47,9 @@ for isim,sim in enumerate(sims):
         os.makedirs(outpath)
         
     # Read the data from the sim
-    #ff = unitdir+sim+'/'+sim+'_model_z'+str(zz)+'_ELGs.h5'
+    ff = unitdir+'z'+str(zz)+'/'+sim+'_model_z'+str(round(zz,3))+'_ELGs.h5'
 
-    ff = unitdir+sim+'/UNITSIM1_model_z'+str(zz)+'_ELGs.h5'
+    #ff = unitdir+sim+'/UNITSIM1_model_z'+str(zz)+'_ELGs.h5'
     print(ff)
     if (not check_file(ff)):  print('quitting'); continue
     #if (not os.path.exists(ff)):  continue

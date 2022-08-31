@@ -2,14 +2,15 @@ import os.path, sys
 import numpy as np
 from scipy.interpolate import interp1d
 
-Testing = False
+Testing = True
 
-zz = 0.987
+zz = 0.9873
 
-sims = ['z0.9873']
-#sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+#sims = ['z0.9873']
+sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
 
 #############################
+#inpath = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 inpath = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 #inpath = '/home2/vgonzalez/out/desi_samUNIT/'
 #############################
@@ -23,7 +24,7 @@ labelp = ['log10(M/Msun/h)','log10(SFR/Msun/Gyr)', 'log10(L[OII]/h^-2 erg/s)']
 massnd = [13.34e-4, 14.92e-4, 1.0E-2, 10**(-2.5)]
 sfnd = [13.34e-4, 14.92e-4, 1.0E-2, 10**(-2.5)]
 
-if Testing: sims=[sims[0]] ; props=[props[0]]
+if Testing: sims=[sims[0]] #; props=[props[0]]
 
 redshift = str(zz).replace('.','_')
 
