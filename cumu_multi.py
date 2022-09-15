@@ -3,22 +3,23 @@ import h5py
 import numpy as np
 from iotools import check_file
 from stats import n_gt_x
-import matplotlib ; matplotlib.use('Agg')                                                             
-from matplotlib import pyplot as plt                                                                  
-import mpl_style                                                                                      
+import matplotlib ; matplotlib.use('Agg')                        
+from matplotlib import pyplot as plt                             
+import mpl_style
+from desi_samUNIT import supercomputerSupport as sc
 plt.style.use(mpl_style.style1)
 
 Testing = False
 
 zz = 0.9873
 
-sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['UNITSIM1','UNITSIM1_InvPhase']#,'UNITSIM2','UNITSIM2_InvPhase']
 #sims = ['z0.9873']
 
 lboxes = [1000.]*len(sims) # Mpc/h
 
 #unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
-unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
+unitdir = sc.unitdir() + '/ELGs/' # '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
 
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774

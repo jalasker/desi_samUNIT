@@ -4,6 +4,7 @@ import h5py
 import numpy as np
 from Cosmology import set_cosmology,H
 from iotools import check_file
+from desi_samUNIT import supercomputerSupport as sc
 
 Testing = False
 
@@ -11,7 +12,7 @@ h5file = False
 
 zz = 0.9873
 #sims = ['z0.9873']
-sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['UNITSIM1','UNITSIM1_InvPhase']#,'UNITSIM2','UNITSIM2_InvPhase']
 lboxes = [1000.]*len(sims) # Mpc/h                                                          
 h0 = 0.6774
 
@@ -19,8 +20,8 @@ h0 = 0.6774
 #unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
 #outdir = '/home2/vgonzalez/out/desi_samUNIT/'
 
-unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
-outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output_LRGTest/'
+unitdir = sc.unitdir() + '/ELGs/'#'/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
+outdir = sc.scratchdir() + '/UNIT_SAM_output/' #'/global/cscratch1/sd/jlasker/UNIT_SAM_output_LRGTest/'
 ############################################
 
 props = ['mass','sfr','lo2']

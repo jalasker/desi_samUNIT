@@ -4,7 +4,7 @@ import glob
 from nbodykit.source.catalog import CSVCatalog
 from nbodykit.lab import * #to_mesh, FFTPower, power
 import numpy as np
-
+from desi_samUNIT import supercomputerSupport as sc
 Testing = False
 
 zspace = True
@@ -19,7 +19,7 @@ ngrid = 128
 kmin = 0.01
 dk = 0.005
 ############################################   
-seldir = '/home2/vgonzalez/out/desi_samUNIT/'
+seldir = sc.scratchdir() + '/UNIT_SAM_output/'#'/home2/vgonzalez/out/desi_samUNIT/'
 ############################################
 
 if Testing: sims = [sims[0]]

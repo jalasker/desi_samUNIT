@@ -1,17 +1,18 @@
 import os.path, sys
 import numpy as np
 from scipy.interpolate import interp1d
+from desi_samUNIT import supercomputerSupport as sc
 
 Testing = True
 
 zz = 0.9873
 
 #sims = ['z0.9873']
-sims = ['UNITSIM1','UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['UNITSIM1','UNITSIM1_InvPhase']#,'UNITSIM2','UNITSIM2_InvPhase']
 
 #############################
 #inpath = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
-inpath = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+inpath = sc.scratchdir() + '/UNIT_SAM_output/'#'/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 #inpath = '/home2/vgonzalez/out/desi_samUNIT/'
 #############################
 

@@ -4,7 +4,8 @@ import numpy as np
 from iotools import check_file
 import os.path
 from stats import n_gt_x
-import matplotlib ; matplotlib.use('Agg')                                                             
+import matplotlib ; matplotlib.use('Agg')
+from desi_samUNIT import supercomputerSupport as sc
 from matplotlib import pyplot as plt                                                                  
 import mpl_style
 #plt.style.use(mpl_style.style1)
@@ -13,13 +14,13 @@ Testing = False
 
 zz = 0.9873
 
-sims = ['UNITSIM1']#,'UNITSIM1_InvPhase','UNITSIM2','UNITSIM2_InvPhase']
+sims = ['UNITSIM1','UNITSIM1_InvPhase']#,'UNITSIM2','UNITSIM2_InvPhase']
 #sims = ['all_z0.9873']
 #sims = ['z0.9873']
 lboxes = [1000.]*len(sims) # Mpc/h
 #/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/all_z0.9873/UNITSIM1_SAGE_z0.987.hdf5
 
-unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
+unitdir = sc.unitdir() + '/ELGs/' #'/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/ELGs/'
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
 #nd_lrg1 = 0.75e-4
@@ -33,7 +34,7 @@ nd_elgDESIBig = 1.0E-2
 #nd_Jimenez = 10**(-2.5)
 #############################
 #outdir = '/home2/vgonzalez/out/desi_samUNIT/'
-outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+outdir = sc.scratchdir() + '/UNIT_SAM_output/'#'/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 plotdir = outdir+'plots/'
 #obsdir = '/home2/vgonzalez/lfs/'
 #############################

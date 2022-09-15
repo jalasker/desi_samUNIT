@@ -1,9 +1,10 @@
 import sys,os
 import numpy as np
 import glob 
-import matplotlib ; matplotlib.use('Agg')                                                             
-from matplotlib import pyplot as plt                                                                  
-import mpl_style                                                                                      
+import matplotlib ; matplotlib.use('Agg')
+from matplotlib import pyplot as plt   
+import mpl_style
+from desi_samUNIT import supercomputerSupport as sc
 plt.style.use(mpl_style.style1)
 
 Testing = False
@@ -17,7 +18,7 @@ lboxes = [1000.]*len(sims) # Mpc/h
 #############################
 #outdir = '/home2/vgonzalez/out/desi_samUNIT/'
 #plotdir = outdir+'plots/zzrsd/'
-outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+outdir = sc.scratchdir() + '/UNIT_SAM_output/'#/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 plotdir = outdir+'plots/'
 #############################
 

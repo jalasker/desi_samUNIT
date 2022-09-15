@@ -9,6 +9,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 import mpl_style
+from desi_samUNIT import supercomputerSupport as sc
+
 plt.style.use(mpl_style.style1)
 
 Testing = False
@@ -30,7 +32,7 @@ kmaxb = 0.1
 
 ############################################   
 #seldir = '/home2/vgonzalez/out/desi_samUNIT/'
-seldir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+seldir = sc.scratchdir()+ '/UNIT_SAM_output/'#'/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 
 ############################################
 

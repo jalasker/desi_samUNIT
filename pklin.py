@@ -9,7 +9,7 @@ import matplotlib ; matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import mpl_style
 plt.style.use(mpl_style.style1)
-
+from desi_samUNIT import supercomputerSupport as sc
 calculate = True
 plot = True
 
@@ -24,7 +24,7 @@ sigma8 = 0.8147
 
 ############################################   
 #outdir = '/home2/vgonzalez/out/desi_samUNIT/'
-outdir = '/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
+outdir = sc.scratchdir() + '/UNIT_SAM_output/' #'/global/cscratch1/sd/jlasker/UNIT_SAM_output/'
 
 ############################################
 

@@ -8,6 +8,7 @@ import matplotlib ; matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import mpl_style
 plt.style.use(mpl_style.style1)
+from desi_samUNIT import supercomputerSupport as sc                     
 
 Testing = False
 
@@ -18,7 +19,7 @@ lboxes = [1000.]*len(sims) # Mpc/h
 
 
 #unitdir = '/data6/users/aknebe/Projects/UNITSIM/ELGs_DESI/'
-unitdir = '/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/'
+unitdir = sc.unitdir() + '/ELGs/' #'/global/project/projectdirs/desi/mocks/UNIT/SAM_madrid/'
 
 min20p = 20.*1.2*10.**9 # Msun/h
 h0 = 0.6774
